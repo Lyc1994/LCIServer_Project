@@ -8,6 +8,12 @@ export function controller(app: Application) {
         res.send(params)
     })
 
+    app.get('/rel_test', (req, res) => {
+        let params = url.parse(req.url, true).query
+        console.log('/rel_test body:', params)
+        res.send(params)
+    })
+
     app.get('/test_get', (req, res) => {
         let params = url.parse(req.url, true).query
         console.log('/test_get body:', params)
