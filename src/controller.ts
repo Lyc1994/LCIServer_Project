@@ -2,17 +2,17 @@ import { Application } from 'express'
 import url from 'url'
 
 export function controller(app: Application) {
-    app.get('/pub_test', (req, res) => {
-        let params = url.parse(req.url, true).query
-        console.log('/pub_test body:', params)
-        res.send(params)
-    })
+    // app.get('/pub_test', (req, res) => {
+    //     let params = url.parse(req.url, true).query
+    //     console.log('/pub_test body:', params)
+    //     res.send(params)
+    // })
 
-    app.get('/rel_test', (req, res) => {
-        let params = url.parse(req.url, true).query
-        console.log('/rel_test body:', params)
-        res.send(params)
-    })
+    // app.get('/rel_test', (req, res) => {
+    //     let params = url.parse(req.url, true).query
+    //     console.log('/rel_test body:', params)
+    //     res.send(params)
+    // })
 
     app.get('/test_get', (req, res) => {
         let params = url.parse(req.url, true).query
