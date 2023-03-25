@@ -1,6 +1,6 @@
 import express from "express";
+import mongoose from "mongoose";
 import { AddressInfo } from "net";
-// import path from "path";
 import { controller } from "./controller";
 
 class main {
@@ -8,6 +8,17 @@ class main {
     private readonly app = express();
 
     constructor() {
+        mongoose.connect('mongodb://127.0.0.1:27017/admin')
+        mongoose.connection.on('connected', async () => { //连接成功
+            console.log('Mongoose connection success');
+        });
+        mongoose.connection.on('error', (err) => { //连接异常
+            console.log('Mongoose connection error: ' + err);
+        });
+        mongoose.connection.on('disconnected', () => { //连接断开
+            console.log('Mongoose connection disconnected');
+        });
+
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(express.json());
         // this.app.use(express.static(path.join(__dirname, "../public"))); //静态资源
