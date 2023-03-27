@@ -7,6 +7,7 @@ export function baseDataController(app: Application) {
 }
 
 function push_base_data(app: Application, route: string) {
+    log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
         log(`C ===> S method:POST route:${route}\nparams:${params}`)
@@ -31,6 +32,7 @@ function push_base_data(app: Application, route: string) {
 }
 
 function pull_base_data(app: Application, route: string) {
+    log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
         log(`C ===> S method:POST route:${route}\nparams:${params}`)

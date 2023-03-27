@@ -10,6 +10,7 @@ export function userController(app: Application) {
 
 //上传用户数据
 function push_user(app: Application, route: string) {
+    log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
         log(`C ===> S method:POST route:${route}\nparams:${params}`)
@@ -34,6 +35,7 @@ function push_user(app: Application, route: string) {
 
 //拉取用户数据
 function pull_user(app: Application, route: string) {
+    log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
         log(`C ===> S method:POST route:${route}\nparams:${params}`)

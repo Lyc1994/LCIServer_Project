@@ -7,6 +7,7 @@ export function loginController(app: Application) {
 }
 
 function login(app: Application, route: string) {
+    log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
         log(`C ===> S method:POST route:${route}\nparams:${params}`)
