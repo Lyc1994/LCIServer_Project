@@ -1,5 +1,6 @@
 import { Application } from "express"
 import { loginModel } from "../model/LoginModel"
+import { userModel } from "../model/UserModel"
 import { log, random, send } from "../util"
 
 export function loginController(app: Application) {
@@ -10,7 +11,7 @@ function login(app: Application, route: string) {
     log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
-        log(`C ===> S method:POST route:${route}\nparams:${params}`)
+        log(`C ===> S method:POST route:${route}\nparams:${JSON.stringify(params)}`)
 
         let { account, password } = params
         let user = await loginModel.findOne({ account, password })
@@ -22,6 +23,7 @@ function login(app: Application, route: string) {
                 doc = await loginModel.findOne({ userid })
             }
             [user] = await loginModel.insertMany([{ account, password, userid }])
+            await userModel.insertMany([{ userid, username: account }])
         }
         let token = (Date.now() + 24 * 3600 * 1000).toFixed()
         await user.updateOne({ token })

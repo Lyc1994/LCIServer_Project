@@ -10,7 +10,7 @@ function push_base_data(app: Application, route: string) {
     log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
-        log(`C ===> S method:POST route:${route}\nparams:${params}`)
+        log(`C ===> S method:POST route:${route}\nparams:${JSON.stringify(params)}`)
 
         let { userid, key, version, baseData } = params
         let doc = await getBaseData(key).findOne({ userid })
@@ -35,14 +35,14 @@ function pull_base_data(app: Application, route: string) {
     log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
-        log(`C ===> S method:POST route:${route}\nparams:${params}`)
+        log(`C ===> S method:POST route:${route}\nparams:${JSON.stringify(params)}`)
 
         let { userid, key } = params
         let doc = await getBaseData(key).findOne({ userid })
         send(route, res, {
             code: 0,
             message: 'success',
-            version: doc?.version || 1,
+            version: doc?.version || 0,
             baseData: doc?.baseData || ''
         })
     })

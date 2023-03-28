@@ -13,7 +13,7 @@ function push_user(app: Application, route: string) {
     log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
-        log(`C ===> S method:POST route:${route}\nparams:${params}`)
+        log(`C ===> S method:POST route:${route}\nparams:${JSON.stringify(params)}`)
 
         let { userid, username } = params
         if (username) {
@@ -38,7 +38,7 @@ function pull_user(app: Application, route: string) {
     log('register controller route:' + route)
     app.post(route, async (req, res) => {
         let params = req.body
-        log(`C ===> S method:POST route:${route}\nparams:${params}`)
+        log(`C ===> S method:POST route:${route}\nparams:${JSON.stringify(params)}`)
 
         let { userid } = params
         let doc = await userModel.findOne({ userid })
@@ -46,14 +46,12 @@ function pull_user(app: Application, route: string) {
             send(route, res, {
                 code: 0,
                 message: 'success',
-                username: doc.username
+                username: doc?.username
             })
         } else {
-            let doc = await loginModel.findOne({ userid })
             send(route, res, {
-                code: 0,
-                message: 'success',
-                username: doc?.account
+                code: 1,
+                message: 'user not exist'
             })
         }
     })
