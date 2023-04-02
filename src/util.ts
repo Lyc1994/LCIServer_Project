@@ -13,6 +13,7 @@ export function getBaseData(key: string) {
 }
 
 export function setBaseData(key: string, model: any) {
+    log('set base data:' + key)
     baseData[key] = model
 }
 
