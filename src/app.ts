@@ -4,7 +4,6 @@ import { AddressInfo } from 'net'
 import { baseDataController } from './controller/BaseDataController'
 import { loginController } from './controller/LoginController'
 import { userController } from './controller/UserController'
-import { fightingDataModel } from './model/basedata/FightingDataModel'
 import { realmDataModel } from './model/basedata/RealmDataModel'
 import { log, setBaseData } from './util'
 
@@ -17,7 +16,6 @@ class main {
         mongoose.connection.on('connected', async () => { //连接成功
             log('Mongoose connection success')
             setBaseData('realm_data', realmDataModel)
-            setBaseData('fighting_data', fightingDataModel)
         })
         mongoose.connection.on('error', (err) => { //连接异常
             log('Mongoose connection error: ' + err)
