@@ -7,6 +7,9 @@ export function loginController(app: Application) {
     login(app, '/login')
 }
 
+/**
+ * 登录
+ */
 function login(app: Application, route: string) {
     log('register controller route:' + route)
     app.post(route, async (req, res) => {
@@ -23,14 +26,12 @@ function login(app: Application, route: string) {
                 doc = await loginModel.findOne({ userid })
             }
             [user] = await loginModel.insertMany([{ account, password, userid }])
-            await userModel.insertMany([{ userid, username: account }])
+            await userModel.insertMany([{ userid }])
         }
         let token = (Date.now() + 24 * 3600 * 1000).toFixed()
         await user.updateOne({ token })
 
         send(route, res, {
-            code: 0,
-            message: 'success',
             userid: user.userid,
             token
         })

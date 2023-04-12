@@ -1,4 +1,8 @@
-export function send(route: string, res: any, response: any = { code: 0, message: 'success' }) {
+export function send(route: string, res: any, response?: any, error: any = { code: 0, message: 'success' }) {
+    response = {
+        ...error,
+        ...(response || {})
+    }
     res.send(response)
     log(`S ===> C method:POST route:${route}\nresponse:${JSON.stringify(response)}`)
 }

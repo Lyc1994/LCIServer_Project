@@ -1,5 +1,4 @@
 import { Application } from "express";
-import { loginModel } from "../model/LoginModel";
 import { userModel } from "../model/UserModel";
 import { log, send } from "../util";
 
@@ -8,7 +7,9 @@ export function userController(app: Application) {
     pull_user(app, '/pull_user')
 }
 
-//上传用户数据
+/**
+ * 上传用户数据
+ */
 function push_user(app: Application, route: string) {
     log('register controller route:' + route)
     app.post(route, async (req, res) => {
@@ -20,12 +21,15 @@ function push_user(app: Application, route: string) {
             let doc = await userModel.findOne({ userid })
             if (doc) {
                 await doc.updateOne({ username })
+                send(route, res)
             } else {
-                await userModel.insertMany([{ userid, username }])
+                send(route, res, null, {
+                    code: 1,
+                    message: 'user not exist'
+                })
             }
-            send(route, res)
         } else {
-            send(route, res, {
+            send(route, res, null, {
                 code: 1,
                 message: 'username is nil'
             })
@@ -33,7 +37,9 @@ function push_user(app: Application, route: string) {
     })
 }
 
-//拉取用户数据
+/**
+ * 拉取用户数据
+ */
 function pull_user(app: Application, route: string) {
     log('register controller route:' + route)
     app.post(route, async (req, res) => {
@@ -42,14 +48,12 @@ function pull_user(app: Application, route: string) {
 
         let { userid } = params
         let doc = await userModel.findOne({ userid })
-        if (doc?.username) {
+        if (doc) {
             send(route, res, {
-                code: 0,
-                message: 'success',
                 username: doc?.username
             })
         } else {
-            send(route, res, {
+            send(route, res, null, {
                 code: 1,
                 message: 'user not exist'
             })

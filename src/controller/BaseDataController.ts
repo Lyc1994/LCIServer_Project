@@ -19,7 +19,7 @@ function push_base_data(app: Application, route: string) {
                 await doc.updateOne({ version, baseData })
                 send(route, res)
             } else {
-                send(route, res, {
+                send(route, res, null, {
                     code: 1,
                     message: 'version is too low'
                 })
@@ -40,8 +40,6 @@ function pull_base_data(app: Application, route: string) {
         let { userid, key } = params
         let doc = await getBaseData(key).findOne({ userid })
         send(route, res, {
-            code: 0,
-            message: 'success',
             version: doc?.version || 0,
             baseData: doc?.baseData || ''
         })
